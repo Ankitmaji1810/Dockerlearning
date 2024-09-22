@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  mongodb:
+    image: 'mongo'
+    volumes:
+      - data:/data/db #named volume
+   # environment: 
+     # - MONGO_INITDB_ROOT_USERNAME=max
+     # - MONGO_INITDB_ROOT_PASSWORD=secret  we can add env vrs like this also
+    env_file:
+      - ./env/mongo.env
+    container_name: database
+    
+  
+  backend:
+    build: ./backend
+    # context: ./filepath
+    # dockerfile: Dockerfilename
+    ports:
+      - '80:80' #esposed to the host:exposed on the application
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app/node_modules
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+    container_name: backend
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000' #open in public:open in app
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    container_name: frontend
+    depends_on:
+      - backend
+volumes:
+  data:
+  logs:
