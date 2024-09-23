@@ -1,4 +1,6 @@
-Hi All, this is not my code. This is a sample code for docker compose run.
+Hi All, this is not my code. This is a sample code for a Node application, where react is used as FE and Mongo is used as DB.
+
+So that you know, I have created the docker file and docker compose file only.
 
 commands
 check if docker is installed in your system
